@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lutong Pilipino — Flavors of the Nation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8960C;
+    --deep-gold: #8B6914;
+    --red: #C0392B;
+    --dark-red: #7D1A13;
+    --cream: #F5ECD7;
+    --light-cream: #FAF5EA;
+    --brown: #3D2B1F;
+    --dark-brown: #1C1008;
+    --green: #4A6741;
+    --sun-yellow: #F0B429;
+    --baybayin-color: rgba(200, 150, 12, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--dark-brown);
+    color: var(--cream);
+    font-family: 'Crimson Pro', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 16px; height: 16px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-trail {
+    width: 40px; height: 40px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.18s ease;
+    opacity: 0.5;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* Baybayin Background Pattern */
+  .baybayin-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ctext x='10' y='50' font-size='40' fill='rgba(200,150,12,0.04)' font-family='serif'%3Eᜊ%3C/text%3E%3Ctext x='60' y='100' font-size='35' fill='rgba(200,150,12,0.04)' font-family='serif'%3Eᜎ%3C/text%3E%3C/svg%3E");
+    background-size: 120px 120px;
+  }
+
+  /* NAVIGATION */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(28,16,8,0.95), transparent);
+    transition: all 0.4s ease;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(200,150,12,0.4);
+  }
+  .nav-logo span { color: var(--cream); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.75;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 40px 80px;
+  }
+
+  .hero-sun {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,180,41,0.12) 0%, rgba(200,150,12,0.05) 50%, transparent 70%);
+    animation: pulse-sun 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes pulse-sun {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+  .sun-rays {
+    position: absolute;
+    width: 600px; height: 600px;
+    pointer-events: none;
+    animation: rotate-slow 30s linear infinite;
+  }
+  .sun-rays::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100%; height: 2px;
+    background: linear-gradient(to right, transparent, rgba(200,150,12,0.2), transparent);
+    transform-origin: center;
+    box-shadow:
+      0 0 0 0 transparent,
+      rotate(30deg) 0 0 0 0 transparent;
+  }
+  @keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Generate sun rays using clip path */
+  .rays-container {
+    position: absolute;
+    width: 700px; height: 700px;
+    pointer-events: none;
+    animation: rotate-slow 60s linear infinite;
+    opacity: 0.3;
+  }
+  .ray {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 350px; height: 2px;
+    background: linear-gradient(to right, rgba(200,150,12,0.8), transparent);
+    transform-origin: left center;
+    margin-top: -1px;
+  }
+
+  .hero-tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(16px, 3vw, 22px);
+    letter-spacing: 8px;
+    color: var(--gold);
+    margin-bottom: 20px;
+    animation: fadeInUp 1.2s ease both;
+    animation-delay: 0.2s;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 10vw, 110px);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--cream);
+    margin-bottom: 16px;
+    animation: fadeInUp 1.2s ease both;
+    animation-delay: 0.4s;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 26px);
+    color: rgba(245,236,215,0.65);
+    margin-bottom: 50px;
+    animation: fadeInUp 1.2s ease both;
+    animation-delay: 0.6s;
+  }
+  .hero-cta {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s;
+    animation: fadeInUp 1.2s ease both;
+    animation-delay: 0.8s;
+  }
+  .hero-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--gold);
+    transition: left 0.4s ease;
+    z-index: -1;
+  }
+  .hero-cta:hover { color: var(--dark-brown); }
+  .hero-cta:hover::before { left: 0; }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeInUp 1.5s ease both 1.2s;
+    opacity: 0.5;
+  }
+  .scroll-indicator span {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 60px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #hero { opacity: 1; transform: none; }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-desc {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(245,236,215,0.7);
+    max-width: 600px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 60px auto;
+    max-width: 400px;
+    justify-content: center;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
+  .divider-line:last-child { background: linear-gradient(to left, transparent, var(--gold)); }
+  .divider-icon { color: var(--gold); font-size: 20px; }
+
+  /* DISHES GRID */
+  #dishes { background: var(--dark-brown); }
+  .dishes-header { text-align: center; margin-bottom: 60px; }
+  .dishes-header .section-label { justify-content: center; }
+  .dishes-header .section-label::before { display: none; }
+
+  .dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .dish-card {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    cursor: none;
+    background: var(--brown);
+  }
+  .dish-card:nth-child(1) { grid-row: span 1; }
+  .dish-card:nth-child(6) { grid-column: span 1; }
+  .dish-card:nth-child(4) { grid-column: span 1; }
+
+  .dish-emoji {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    z-index: 1;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.8));
+  }
+  .dish-card:nth-child(1) .dish-emoji { font-size: 120px; }
+  .dish-card:nth-child(4) .dish-emoji { font-size: 100px; }
+
+  .dish-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.8s ease;
+    opacity: 0.4;
+  }
+
+  .dish-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,16,8,0.98) 0%, rgba(28,16,8,0.4) 50%, rgba(28,16,8,0.1) 100%);
+    z-index: 2;
+    transition: background 0.5s ease;
+  }
+
+  .dish-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 30px;
+    z-index: 3;
+    transform: translateY(0);
+    transition: transform 0.5s ease;
+  }
+  .dish-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+  .dish-region {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 10px;
+  }
+  .dish-preview {
+    font-size: 14px;
+    color: rgba(245,236,215,0.6);
+    line-height: 1.5;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+  }
+  .dish-tap-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+  }
+  .dish-tap-hint::after {
+    content: '→';
+    transition: transform 0.3s;
+  }
+  .dish-card:hover .dish-tap-hint::after { transform: translateX(5px); }
+
+  .dish-card:hover .dish-bg { transform: scale(1.08); }
+  .dish-card:hover .dish-emoji { transform: translate(-50%, -60%) scale(1.1); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.9)); }
+  .dish-card:hover .dish-overlay { background: linear-gradient(to top, rgba(28,16,8,0.99) 0%, rgba(28,16,8,0.6) 50%, rgba(28,16,8,0.2) 100%); }
+  .dish-card:hover .dish-preview { max-height: 80px; opacity: 1; }
+  .dish-card:hover .dish-tap-hint { opacity: 0.9; transform: translateY(0); }
+  .dish-card:hover .dish-name { color: var(--gold); }
+
+  /* Click ripple */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(200,150,12,0.3);
+    transform: scale(0);
+    animation: ripple-anim 0.7s ease-out forwards;
+    pointer-events: none;
+    z-index: 10;
+  }
+  @keyframes ripple-anim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(12,6,3,0.95);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    backdrop-filter: blur(10px);
+    padding: 20px;
+  }
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--brown);
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.92) translateY(30px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(200,150,12,0.2);
+  }
+  .modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-hero {
+    height: 280px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--dark-brown), var(--brown));
+  }
+  .modal-hero-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+    opacity: 0.7;
+  }
+  .modal:hover .modal-hero-img { transform: scale(1.03); }
+  .modal-emoji {
+    font-size: 120px;
+    filter: drop-shadow(0 20px 60px rgba(0,0,0,0.8));
+    animation: float-dish 3s ease-in-out infinite;
+  }
+  @keyframes float-dish {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  .modal-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, var(--brown));
+  }
+  .modal-gold-line {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .modal-body { padding: 50px; }
+  .modal-region-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    background: rgba(200,150,12,0.1);
+    border: 1px solid rgba(200,150,12,0.3);
+    padding: 6px 16px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .modal-subtitle {
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(245,236,215,0.5);
+    margin-bottom: 30px;
+  }
+
+  .modal-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(200,150,12,0.2);
+  }
+  .modal-tab {
+    padding: 12px 28px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: rgba(245,236,215,0.4);
+    cursor: none;
+    position: relative;
+    transition: color 0.3s;
+    border: none;
+    background: none;
+  }
+  .modal-tab.active { color: var(--gold); }
+  .modal-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .modal-tab.active::after { width: 100%; }
+
+  .modal-tab-content { display: none; }
+  .modal-tab-content.active {
+    display: block;
+    animation: fadeInUp 0.4s ease;
+  }
+
+  .story-text {
+    font-size: 18px;
+    line-height: 2;
+    color: rgba(245,236,215,0.8);
+    margin-bottom: 20px;
+  }
+  .story-quote {
+    border-left: 3px solid var(--gold);
+    padding-left: 24px;
+    margin: 30px 0;
+    font-style: italic;
+    font-size: 20px;
+    color: rgba(245,236,215,0.6);
+    line-height: 1.8;
+  }
+
+  .recipe-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin: 30px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .recipe-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,150,12,0.2);
+  }
+
+  .ingredients-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    list-style: none;
+  }
+  .ingredients-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: rgba(245,236,215,0.75);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(200,150,12,0.1);
+  }
+  .ingredients-list li::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 8px;
+    flex-shrink: 0;
+  }
+
+  .steps-list { list-style: none; }
+  .steps-list li {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(245,236,215,0.75);
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: rgba(200,150,12,0.3);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 40px;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 24px; right: 24px;
+    width: 44px; height: 44px;
+    border: 1px solid rgba(200,150,12,0.3);
+    background: rgba(200,150,12,0.1);
+    color: var(--gold);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all 0.3s;
+    z-index: 10;
+  }
+  .modal-close:hover {
+    background: var(--gold);
+    color: var(--dark-brown);
+  }
+
+  /* CULTURE SECTION */
+  #culture {
+    background: linear-gradient(180deg, var(--dark-brown) 0%, rgba(61,43,31,0.3) 100%);
+  }
+  .culture-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 60px auto 0;
+  }
+  .culture-visual {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .culture-circle {
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(200,150,12,0.15), rgba(61,43,31,0.5));
+    border: 1px solid rgba(200,150,12,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: rotate-slow 20s linear infinite;
+  }
+  .culture-inner {
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,150,12,0.1), transparent);
+    border: 1px solid rgba(200,150,12,0.1);
+    animation: rotate-slow 15s linear infinite reverse;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+  }
+  .orbit-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--gold);
+  }
+  .orbit-dot:nth-child(1) { top: 10px; left: 50%; transform: translateX(-50%); }
+  .orbit-dot:nth-child(2) { bottom: 10px; left: 50%; transform: translateX(-50%); }
+  .orbit-dot:nth-child(3) { left: 10px; top: 50%; transform: translateY(-50%); }
+  .orbit-dot:nth-child(4) { right: 10px; top: 50%; transform: translateY(-50%); }
+
+  .culture-text { padding: 20px 0; }
+  .culture-pillars { margin-top: 40px; }
+  .pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(200,150,12,0.1);
+  }
+  .pillar-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .pillar-desc { font-size: 15px; line-height: 1.7; color: rgba(245,236,215,0.6); }
+
+  /* REGIONS */
+  #regions { background: var(--dark-brown); }
+  .regions-header { text-align: center; margin-bottom: 60px; }
+  .regions-header .section-label { justify-content: center; }
+  .regions-header .section-label::before { display: none; }
+
+  .regions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .region-card {
+    padding: 40px 30px;
+    border: 1px solid rgba(200,150,12,0.1);
+    background: linear-gradient(135deg, rgba(61,43,31,0.4), rgba(28,16,8,0.6));
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: none;
+  }
+  .region-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--gold);
+    transition: height 0.5s ease;
+  }
+  .region-card:hover::before { height: 100%; }
+  .region-card:hover {
+    border-color: rgba(200,150,12,0.4);
+    transform: translateX(4px);
+    background: linear-gradient(135deg, rgba(61,43,31,0.7), rgba(28,16,8,0.8));
+  }
+  .region-flag { font-size: 40px; margin-bottom: 16px; }
+  .region-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+  .region-card:hover .region-name { color: var(--gold); }
+  .region-foods {
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .region-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(245,236,215,0.55);
+    margin-bottom: 16px;
+  }
+  .region-click-hint {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .region-click-hint::after { content: '→'; }
+  .region-card:hover .region-click-hint { opacity: 0.8; transform: translateY(0); }
+
+  /* REGION MODAL */
+  .rmodal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,5,2,0.97);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    backdrop-filter: blur(12px);
+    padding: 20px;
+  }
+  .rmodal-overlay.active { opacity: 1; pointer-events: all; }
+
+  .rmodal {
+    background: var(--brown);
+    max-width: 980px;
+    width: 100%;
+    max-height: 92vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9) translateY(40px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+    border: 1px solid rgba(200,150,12,0.2);
+  }
+  .rmodal-overlay.active .rmodal { transform: scale(1) translateY(0); }
+
+  .rmodal-banner {
+    height: 200px;
+    background: linear-gradient(135deg, var(--dark-brown), var(--brown));
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 40px 50px;
+    gap: 30px;
+  }
+  .rmodal-banner-icon {
+    font-size: 80px;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.7));
+    flex-shrink: 0;
+    animation: float-dish 3s ease-in-out infinite;
+  }
+  .rmodal-banner-text { flex: 1; }
+  .rmodal-region-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    background: rgba(200,150,12,0.1);
+    border: 1px solid rgba(200,150,12,0.3);
+    padding: 5px 14px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .rmodal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .rmodal-subtitle {
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(245,236,215,0.5);
+  }
+  .rmodal-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  /* Decorative side pattern */
+  .rmodal-banner::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,150,12,0.07), transparent 70%);
+  }
+
+  .rmodal-body { padding: 50px; }
+
+  .rmodal-story-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .rmodal-story-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,150,12,0.2);
+  }
+
+  .rmodal-story {
+    font-size: 17px;
+    line-height: 1.9;
+    color: rgba(245,236,215,0.75);
+    margin-bottom: 10px;
+  }
+  .rmodal-quote {
+    border-left: 3px solid var(--gold);
+    padding: 12px 24px;
+    margin: 24px 0;
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(245,236,215,0.55);
+    line-height: 1.7;
+    background: rgba(200,150,12,0.04);
+  }
+
+  .rmodal-dishes-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    margin: 40px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .rmodal-dishes-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,150,12,0.2);
+  }
+
+  .rmodal-dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .rmodal-dish-item {
+    padding: 18px 16px;
+    border: 1px solid rgba(200,150,12,0.1);
+    background: rgba(28,16,8,0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .rmodal-dish-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+  .rmodal-dish-item:hover { border-color: rgba(200,150,12,0.3); background: rgba(61,43,31,0.6); }
+  .rmodal-dish-item:hover::before { width: 100%; }
+  .rmodal-dish-emoji { font-size: 32px; margin-bottom: 10px; }
+  .rmodal-dish-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .rmodal-dish-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(245,236,215,0.5);
+  }
+  .rmodal-dish-tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    border: 1px solid rgba(200,150,12,0.2);
+    padding: 2px 8px;
+  }
+
+  .rmodal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 40px; height: 40px;
+    border: 1px solid rgba(200,150,12,0.3);
+    background: rgba(200,150,12,0.1);
+    color: var(--gold);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all 0.3s;
+    z-index: 10;
+  }
+  .rmodal-close:hover { background: var(--gold); color: var(--dark-brown); }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 60px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(200,150,12,0.15);
+    position: relative;
+    z-index: 1;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .footer-tagline {
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(245,236,215,0.4);
+    margin-bottom: 40px;
+  }
+  .footer-bottom {
+    font-size: 13px;
+    color: rgba(245,236,215,0.25);
+    letter-spacing: 2px;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark-brown); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* Modal scrollbar */
+  .modal::-webkit-scrollbar { width: 4px; }
+  .modal::-webkit-scrollbar-thumb { background: rgba(200,150,12,0.3); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .dishes-grid { grid-template-columns: 1fr 1fr; }
+    .dish-card:nth-child(1) { grid-row: span 1; }
+    .dish-card:nth-child(4) { grid-column: span 1; }
+    .culture-grid { grid-template-columns: 1fr; }
+    .culture-visual { height: 300px; }
+    .regions-grid { grid-template-columns: 1fr; }
+    .ingredients-list { grid-template-columns: 1fr; }
+    .modal-body { padding: 30px 24px; }
+    .hero-title { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="baybayin-bg"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">Lutong<span>Pilipino</span></div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#dishes">Dishes</a></li>
+    <li><a href="#culture">Culture</a></li>
+    <li><a href="#regions">Regions</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-sun"></div>
+  <div class="rays-container" id="raysContainer"></div>
+  <div class="hero-tagline">From the Heart of the Archipelago</div>
+  <h1 class="hero-title">Lutong<em>Pilipino</em></h1>
+  <p class="hero-subtitle">Flavors, Stories, and Culture of the Nation</p>
+  <a href="#dishes" class="hero-cta">Explore the Dishes</a>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- DISHES -->
+<section id="dishes">
+  <div class="dishes-header">
+    <div class="section-label">Featured Dishes</div>
+    <h2 class="section-title">Taste of the <em>Nation</em></h2>
+    <p class="section-desc" style="margin: 0 auto; text-align:center;">Click on each dish to discover its story, recipe, and the culture behind every flavor.</p>
+  </div>
+  <div class="dishes-grid" id="dishesGrid"></div>
+</section>
+
+<!-- CULTURE -->
+<section id="culture">
+  <div class="culture-grid">
+    <div class="culture-visual">
+      <div class="culture-circle">
+        <div class="orbit-dot"></div>
+        <div class="orbit-dot"></div>
+        <div class="orbit-dot"></div>
+        <div class="orbit-dot"></div>
+        <div class="culture-inner" id="cultureInner">
+          <img src="https://i.imgur.com/ogLe8sj.jpeg" style="width:150px; height:150px; object-fit:cover; border-radius:50%;">
+        </div>
+      </div>
+    </div>
+    <div class="culture-text">
+      <div class="section-label">Food and Culture</div>
+      <h2 class="section-title">More Than <em>Food</em></h2>
+      <p class="section-desc">Every dish carries a story — of family, history, and love. It is not just food; it is culture.</p>
+      <div class="culture-pillars">
+        <div class="pillar">
+          <span class="pillar-icon">🤝</span>
+          <div>
+            <div class="pillar-title">Bayanihan</div>
+            <div class="pillar-desc">Food is always shared. In every gathering, families come together and hearts grow closer.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar-icon">🌊</span>
+          <div>
+            <div class="pillar-title">Influence of the Sea</div>
+            <div class="pillar-desc">As an archipelago, fish and seafood are primary ingredients in many dishes from Luzon to Mindanao.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar-icon">🌏</span>
+          <div>
+            <div class="pillar-title">Blended Culture</div>
+            <div class="pillar-desc">Combined influences of Spanish, Chinese, Malay, and American cultures created a unique flavor found only in the Philippines.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGIONS -->
+<section id="regions">
+  <div class="regions-header">
+    <div class="section-label">Regional Flavors</div>
+    <h2 class="section-title">Cuisine of Every <em>Region</em></h2>
+    <p class="section-desc" style="margin: 0 auto 0; text-align:center;">From north to south, every corner of the Philippines has its own unique food and way of cooking.</p>
+  </div>
+  <div class="regions-grid" id="regionsGrid"></div>
+</section>
+
+<!-- REGION MODAL -->
+<div class="rmodal-overlay" id="rmodalOverlay">
+  <div class="rmodal" id="rmodal">
+    <button class="rmodal-close" id="rmodalClose">✕</button>
+    <div class="rmodal-banner">
+      <div class="rmodal-banner-icon" id="rmodalIcon"></div>
+      <div class="rmodal-banner-text">
+        <div class="rmodal-region-tag" id="rmodalTag"></div>
+        <div class="rmodal-title" id="rmodalTitle"></div>
+        <div class="rmodal-subtitle" id="rmodalSubtitle"></div>
+      </div>
+    </div>
+    <div class="rmodal-body">
+      <div class="rmodal-story-title">Story of the Region</div>
+      <div id="rmodalStory"></div>
+      <div class="rmodal-dishes-title">Featured Dishes</div>
+      <div class="rmodal-dishes-grid" id="rmodalDishes"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Lutong Pilipino</div>
+  <div class="footer-tagline">"Food is love made visible."</div>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">✦</div>
+    <div class="divider-line"></div>
+  </div>
+  <div class="footer-bottom">© 2025 Lutong Pilipino · Made with Love for the Nation</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-hero">
+      <div class="modal-hero-img" id="modalHeroImg"></div>
+      <div class="modal-emoji" id="modalEmoji"></div>
+      <div class="modal-hero-overlay"></div>
+      <div class="modal-gold-line"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-region-tag" id="modalRegion"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-subtitle" id="modalSubtitle"></div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="story">Story</button>
+        <button class="modal-tab" data-tab="recipe">Recipe</button>
+        <button class="modal-tab" data-tab="info">Information</button>
+      </div>
+      <div class="modal-tab-content active" id="tab-story"></div>
+      <div class="modal-tab-content" id="tab-recipe"></div>
+      <div class="modal-tab-content" id="tab-info"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════╗
+// ║   PASTE YOUR IMGUR LINKS HERE — Easy to edit!   ║
+// ╚══════════════════════════════════════════════════╝
+
+// --- MAIN DISH IMAGES ---
+const IMAGES = {
+  lechon:   'https://i.imgur.com/kou8lXF.jpeg',
+  adobo:    'https://i.imgur.com/40AktYH.jpeg',
+  sinigang: 'https://i.imgur.com/eAx4dF9.jpeg',
+  karekare: 'https://i.imgur.com/k31Gv2I.jpeg',
+  halohalo: 'https://i.imgur.com/IgRi64c.jpeg',
+  sisig:    'https://i.imgur.com/dpURBYW.jpeg',
+};
+
+// --- GUMAMELA / CULTURE SECTION IMAGE ---
+const GUMAMELA_IMAGE = 'https://i.imgur.com/PALITAN.jpg';
+
+// --- REGION CARD IMAGES (background of each region card) ---
+const REGION_IMAGES = {
+  ilocos:  'https://i.imgur.com/PALITAN.jpg',
+  bicol:   'https://i.imgur.com/PALITAN.jpg',
+  manila:  'https://i.imgur.com/PALITAN.jpg',
+  visayas: 'https://i.imgur.com/PALITAN.jpg',
+  mindanao:'https://i.imgur.com/PALITAN.jpg',
+  pampanga:'https://i.imgur.com/PALITAN.jpg',
+};
+
+// ════════════════════════════════════════════
+
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const dishes = [
+  {
+    emoji: '🍖',
+    name: 'Lechon',
+    image: IMAGES.lechon,
+    subtitle: 'Ang Hari ng Handaan',
+    region: 'Buong Pilipinas',
+    preview: 'Ang baboy na inihaw nang buo sa uling, simbolo ng pagdiriwang.',
+    story: `<p class="story-text">Sa bawat pagdiriwang sa Pilipinas — birthday, kasal, binyag, o simpleng tagumpay — palaging nariyan ang lechon. Hindi lamang ito pagkain; ito ay simbolo ng kagalakan, ng pasasalamat, at ng pagtitipon ng pamilya.</p>
+    <blockquote class="story-quote">"The best pig I've ever had in my life." — Anthony Bourdain tungkol sa Lechon Cebu</blockquote>
+    <p class="story-text">Nagsimula ang lechon noong panahon ng mga Espanyol, na nagdala ng tradisyon ng pagluluto ng baboy sa buong katawan. Ngunit binago ito ng mga Pilipino — dinagdagan ng bawang, tanglad, at iba't ibang halaman sa loob, at inihaw nang matagal sa uling hanggang maging gintong kayumanggi ang balat.</p>
+    <p class="story-text">Sa Cebu, ang lechon ay natatangi sa masampal na balat at mabangong pampalasa. Sa Luzon naman, ang sarsa ng atay — o "sarsa ng mang tomas" — ay palaging kasama. Bawat probinsya ay may sariling sikreto.</p>`,
+    recipe: `<div class="recipe-section-title">Mga Sangkap</div>
+    <ul class="ingredients-list">
+      <li>1 buong baboy (7-10 kg)</li>
+      <li>2 ulo ng bawang, dinurog</li>
+      <li>5 tangkay ng tanglad</li>
+      <li>1 cup sibuyas na pula, hiniwa</li>
+      <li>2 kutsara asin</li>
+      <li>1 kutsara paminta</li>
+      <li>Dahon ng pandan</li>
+      <li>Suka at asin para sa pagbababad</li>
+    </ul>
+    <div class="recipe-section-title">Paraan ng Pagluluto</div>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><span>Linisin nang mabuti ang buong baboy. Punasan ng suka at asin sa loob at labas. Iwanan ng 2 oras.</span></li>
+      <li><span class="step-num">02</span><span>Ihanda ang palaman: pagsamahin ang tanglad, bawang, sibuyas, at dahon ng pandan. Ilagay sa loob ng baboy.</span></li>
+      <li><span class="step-num">03</span><span>Ituhog ang baboy sa kawayan at higpiting mabuti. Timplahan ang labas ng asin at paminta.</span></li>
+      <li><span class="step-num">04</span><span>Ihaw sa uling ng 4-6 na oras, paikutin tuwing 15-20 minuto para pantay ang pagkaluto.</span></li>
+      <li><span class="step-num">05</span><span>Kapag naging gintong kayumanggi ang balat at malutong na, handa na ang lechon. Ihain na may sarsa!</span></li>
+    </ol>`,
+    info: `<p class="story-text"><strong style="color:var(--gold)">Pinagmulan:</strong> Nagsimula sa panahon ng Espanyol noong ika-16 na siglo. Nagmula sa salitang "leche" (gatas) na ginagamit para sa mga batang hayop.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Saan Makikita:</strong> Sa lahat ng sulok ng Pilipinas, lalo na sa Cebu na kilala bilang pinakamainam na lechon sa buong mundo.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Katotohanan:</strong> Ang Pilipinas ay nag-iihaw ng higit sa isang milyong lechon bawat Pasko. Ito ang pinaka-iconic na pagkain ng mga Pilipino sa buong mundo.</p>`
+  },
+  {
+    emoji: '🥘',
+    name: 'Adobo',
+    image: IMAGES.adobo,
+    subtitle: 'Pambansang Putahe ng Pilipinas',
+    region: 'Buong Pilipinas',
+    preview: 'Karne na nilaga sa suka, toyo, at bawang — simple ngunit walang katulad.',
+    story: `<p class="story-text">Kung may isang pagkain na kumakatawan sa buong Pilipinas, ito ay ang adobo. Sa bawat probinsya, sa bawat pamilya, ay may sariling bersyon — iba-iba ang timpla, ngunit pare-parehong puso ng pagmamahal ang nasa likod ng bawat nagluluto.</p>
+    <blockquote class="story-quote">"Ang adobo ay hindi lang pagkain — ito ay kwento ng pamilya."</blockquote>
+    <p class="story-text">Bago pa dumating ang mga Espanyol, nagluluto na ang mga katutubong Pilipino ng karne sa suka para mapatagal ito sa mainit na panahon. Noong dumating ang mga Espanyol at nakita ang paraan ng paglulutong ito, tinawag nila itong "adobo" mula sa salitang Espanyol na "adobar" na nangangahulugang mag-marinade.</p>
+    <p class="story-text">Ang Adobong Puti ng Cavite, ang Adobong Dilaw ng Batangas, ang dry adobo ng Maynila — bawat isa ay may kwentong sasabihin. Ito ang pagkain na nagbubuklod sa milyun-milyong Pilipino saan man sa mundo.</p>`,
+    recipe: `<div class="recipe-section-title">Mga Sangkap</div>
+    <ul class="ingredients-list">
+      <li>1 kg manok o baboy</li>
+      <li>½ cup toyo (soy sauce)</li>
+      <li>½ cup suka</li>
+      <li>1 ulo bawang, dinurog</li>
+      <li>3 dahon ng laurel</li>
+      <li>1 kutsarita pamintang buo</li>
+      <li>1 kutsarita asukal (optional)</li>
+      <li>Mantika para sa pagpiprito</li>
+    </ul>
+    <div class="recipe-section-title">Paraan ng Pagluluto</div>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><span>Ibabad ang karne sa toyo, suka, bawang, paminta, at laurel ng hindi bababa sa 1 oras o magdamag sa ref.</span></li>
+      <li><span class="step-num">02</span><span>Ilagay ang lahat sa kawali. Pakuluan ng 10 minuto sa mataas na apoy.</span></li>
+      <li><span class="step-num">03</span><span>Bawasan ang apoy at pakuluan ng 30-40 minuto hanggang lumambot ang karne.</span></li>
+      <li><span class="step-num">04</span><span>Ilabas ang karne. Sa ibang kawali, iprito ang karne hanggang maging kayumanggi.</span></li>
+      <li><span class="step-num">05</span><span>Ibalik ang karne sa sarsa. Timplahan ayon sa panlasa. Ihain na may mainit na kanin!</span></li>
+    </ol>`,
+    info: `<p class="story-text"><strong style="color:var(--gold)">Katayuan:</strong> Itinuturing na "unofficial national dish" ng Pilipinas. May sariling pagdiriwang — ang National Adobo Day — sa bawat ika-31 ng Agosto.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Dami ng Bersyon:</strong> Mahigit 100 iba't ibang bersyon ng adobo sa buong Pilipinas. Kasama na ang adobong kangkong, pusit, sitaw, at marami pa.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Agham:</strong> Dahil sa asim ng suka, natural na preserved ang adobo. Maaaring manatiling sariwa ng 3-5 araw kahit walang refrigerator.</p>`
+  },
+  {
+    emoji: '🍲',
+    name: 'Sinigang',
+    image: IMAGES.sinigang,
+    subtitle: 'Maasim na Sabaw ng Pag-ibig',
+    region: 'Luzon at Visayas',
+    preview: 'Maasim na sopas na may karne at mga gulay — ginhawa sa bawat subo.',
+    story: `<p class="story-text">Kapag may sakit ka, kapag malungkot ka, kapag malamig ang panahon — ang sinigang ang unang naiisip ng mga Pilipino. Ito ang comfort food ng bansa, ang yakap ng ina sa anyo ng mainit na sabaw.</p>
+    <blockquote class="story-quote">"Sa bawat higop ng sinigang, nararamdaman ang pagmamahal ng tahanan."</blockquote>
+    <p class="story-text">Ang asim ng sinigang ay nagmumula sa iba't ibang pinagkukunan — sampalok, bayabas, kamias, calamansi, at kahit manga. Bawat pamilya ay may paboritong pampaasin. Ang sinigang na hipon ng probinsya, ang sinigang na baboy ng lola, ang sinigang na salmon head ng mga modernong kusinero — lahat ay nag-uusap sa iisang wika: mahal kita.</p>`,
+    recipe: `<div class="recipe-section-title">Mga Sangkap</div>
+    <ul class="ingredients-list">
+      <li>1 kg baboy o hipon</li>
+      <li>200g sampalok na sariwa o 1 pack sinigang mix</li>
+      <li>2 kamatis, hiniwa</li>
+      <li>1 sibuyas, hiniwa</li>
+      <li>200g kangkong o sitaw</li>
+      <li>2 labanos, hiniwa</li>
+      <li>3 siling pangsigang</li>
+      <li>Patis at asin sa panlasa</li>
+    </ul>
+    <div class="recipe-section-title">Paraan ng Pagluluto</div>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><span>Pakuluan ang tubig na may sibuyas at kamatis. Ilagay ang karne o hipon.</span></li>
+      <li><span class="step-num">02</span><span>Kapag kumulo, tanggalin ang bula. Lutuin ng 30 minuto para sa baboy, 10 minuto para sa hipon.</span></li>
+      <li><span class="step-num">03</span><span>Ilagay ang sampalok o sinigang mix. Haluin at tikman ang asim. Timplahan ng patis.</span></li>
+      <li><span class="step-num">04</span><span>Ilagay ang labanos at siling pangsigang. Lutuin ng 5 minuto.</span></li>
+      <li><span class="step-num">05</span><span>Sa huling minuto, ilagay ang kangkong o sitaw. Huwag maluto nang labis. Ihain na agad!</span></li>
+    </ol>`,
+    info: `<p class="story-text"><strong style="color:var(--gold)">Pagiging Popular:</strong> Sa isang survey ng TasteAtlas, ang Sinigang ay nahalal bilang pinakamainam na sopas sa buong mundo noong 2021.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Pagkakaiba-iba:</strong> Sinigang na baboy, hipon, isda, baka, at kahit manok — lahat ay tinatangkilik. May bersyon pa na may miso para sa mas malapot na sabaw.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Kultura:</strong> Sa Pilipinas, ang sinigang ay sagisag ng pagmamalasakit. Kapag may dala kang sinigang para sa isang tao, ibig sabihin mahal mo siya.</p>`
+  },
+  {
+    emoji: '🍛',
+    name: 'Kare-Kare',
+    image: IMAGES.karekare,
+    subtitle: 'Makulay na Nilaga ng Tradisyon',
+    region: 'Pampanga at Maynila',
+    preview: 'Magatang nilaga na may mani at gulay, laging may bagoong.',
+    story: `<p class="story-text">Ang Kare-Kare ay isa sa mga pagkain na nagpapakita ng kahusayan ng mga Pilipino sa pagluluto. Ang madilaw na sabaw na gawa sa giling na mani at achuete ay mapagmahal at makulay — tulad ng ating kulturang nagmana mula sa iba't ibang lahi.</p>
+    <blockquote class="story-quote">"Walang Kare-Kare kung walang bagoong — katulad ng buhay na walang saya kung walang hamon."</blockquote>
+    <p class="story-text">May kwento na ang Kare-Kare ay nagmula sa mga sundalong Sepoy na nakarating sa Pilipinas kasama ang mga Britano noong ika-18 siglo. Dinala nila ang impluwensya ng Indian curry, at hinalo ng mga Pilipino sa kanilang sariling paraan ng pagluluto gamit ang mani at gata.</p>`,
+    recipe: `<div class="recipe-section-title">Mga Sangkap</div>
+    <ul class="ingredients-list">
+      <li>1 kg pata ng baka o tripe</li>
+      <li>1 cup giling na mani</li>
+      <li>¼ cup achuete (atsuete)</li>
+      <li>1 tasa bagoong alamang</li>
+      <li>1 talong, hiniwa</li>
+      <li>Puso ng saging, hiniwa</li>
+      <li>Sitaw, hiniwa</li>
+      <li>Pechay Baguio</li>
+    </ul>
+    <div class="recipe-section-title">Paraan ng Pagluluto</div>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><span>Pakuluan ang karne ng 2-3 oras hanggang lumambot. Itabi ang sabaw.</span></li>
+      <li><span class="step-num">02</span><span>Ibabad ang achuete sa mainit na tubig. Pisilin para lumabas ang kulay. Itabi ang tubig.</span></li>
+      <li><span class="step-num">03</span><span>Sa kawali, igisa ang bawang at sibuyas. Ilagay ang karne. Ibuhos ang sabaw at achuete water.</span></li>
+      <li><span class="step-num">04</span><span>Ilagay ang giling na mani. Haluin nang mabuti para hindi mapiga. Pakuluin ng 15 minuto.</span></li>
+      <li><span class="step-num">05</span><span>Ilagay ang mga gulay. Lutuin ng 5-7 minuto. Ihain na may mainit na bagoong sa tabi!</span></li>
+    </ol>`,
+    info: `<p class="story-text"><strong style="color:var(--gold)">Pinagmulan:</strong> Pinaniniwalaang nagmula sa impluwensya ng Indian curry na dumating sa Pilipinas noong ika-18 siglo sa pamamagitan ng mga Sepoy na sundalo.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Kahusayan ng Pampanga:</strong> Ang probinsya ng Pampanga ay kinikilala bilang sentro ng pinakamainam na Kare-Kare sa bansa.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Koneksyon:</strong> Ang Kare-Kare ay palaging may kasamang bagoong — ang kontrasyo ng matamis na mani at maalat na bagoong ay sumisimbolo sa balanse ng buhay.</p>`
+  },
+  {
+    emoji: '🍡',
+    name: 'Halo-Halo',
+    image: IMAGES.halohalo,
+    subtitle: 'Makulay na Paglamig ng Tagsibol',
+    region: 'Buong Pilipinas',
+    preview: 'Haluin ang lahat — yelo, gata, at kulay — sagisag ng ating pagkakakilanlan.',
+    story: `<p class="story-text">Ang pangalan mismo ay "magkasamang halu-haluin." At ito ang perpektong metapora para sa kulturang Pilipino — isang magandang timpla ng iba't ibang lahi, kultura, at tradisyon na nagsama-sama para lumikha ng natatanging pagkakilanlan.</p>
+    <blockquote class="story-quote">"Ang Halo-Halo ay hindi lang dessert — ito ay larawan ng ating bansa."</blockquote>
+    <p class="story-text">Nagsimula ang Halo-Halo noong panahon ng mga Hapon sa Pilipinas. Ang mga Hapones ay nagdala ng paraan ng paggawa ng "kakigori" o shaved ice dessert na may matamis na beans. Inangkop ito ng mga Pilipino at dinagdagan ng kanilang sariling mga sangkap — ube, leche flan, macapuno, kaong, at iba pa hanggang naging talagang "halo-halo" na ang lahat.</p>`,
+    recipe: `<div class="recipe-section-title">Mga Sangkap</div>
+    <ul class="ingredients-list">
+      <li>Crushed ice (marami!)</li>
+      <li>3 tbsp pinagsamang beans (chickpeas, red beans)</li>
+      <li>3 tbsp nata de coco</li>
+      <li>3 tbsp kaong</li>
+      <li>2 tbsp macapuno</li>
+      <li>1 piraso leche flan</li>
+      <li>2 scoops ube ice cream</li>
+      <li>Evaporated milk, asukal</li>
+    </ul>
+    <div class="recipe-section-title">Paraan ng Paghahanda</div>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><span>Sa mataas na baso, ilagay ang beans, nata de coco, kaong, at macapuno sa ibaba. Budburan ng asukal.</span></li>
+      <li><span class="step-num">02</span><span>Punuin ng crushed ice hanggang sa taas ng baso.</span></li>
+      <li><span class="step-num">03</span><span>Ibuhos ang evaporated milk sa taas ng yelo.</span></li>
+      <li><span class="step-num">04</span><span>Ilagay ang leche flan at ube ice cream sa tuktok.</span></li>
+      <li><span class="step-num">05</span><span>Haluin nang mabuti at kainin agad bago matunaw ang yelo!</span></li>
+    </ol>`,
+    info: `<p class="story-text"><strong style="color:var(--gold)">Kasaysayan:</strong> Umunlad noong panahon ng Hapon (1942-1945) mula sa Japanese "kakigori" ngunit binago ng mga Pilipino gamit ang lokal na sangkap.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Simbolismo:</strong> Ang Halo-Halo ay kumakatawan sa kulturang Pilipino — isang magandang timpla ng iba't ibang impluwensya na nagsama para lumikha ng natatanging pagkakilanlan.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Modernong Bersyon:</strong> Maraming restaurant na ngayon ang nagdadagdag ng mais, langka, purple yam, at iba pang lokal na sangkap para maging mas masarap at makulay.</p>`
+  },
+  {
+    emoji: '🍢',
+    name: 'Sisig',
+    image: IMAGES.sisig,
+    subtitle: 'Pride ng Kapampangan',
+    region: 'Pampanga',
+    preview: 'Masarap na tinadtad na karne na may sizzling na hitsura.',
+    story: `<p class="story-text">Ang Sisig ay isa sa pinaka-iconic na pagkain na nagmula sa lalawigan ng Pampanga — ang culinary capital ng Pilipinas. Ang kwento nito ay kwento ng katalinuhan at pagkamalikhain ng mga Kapampangan na hindi nag-aaksaya ng kahit anong bahagi ng baboy.</p>
+    <blockquote class="story-quote">"Ang Sisig ay testament sa Kapampangan ingenuity — gawa sa mga parte na ibang lahi ay itatapon na lang."</blockquote>
+    <p class="story-text">Ayon sa kasaysayan, si Lucia Cunanan ng Angeles City ang nagpopularisa ng modernong sisig noong dekada 70. Bago ito, ang sisig ay simpleng ensaladang suka na may hilaw na baboy. Binago niya ito sa sizzling plate na may tinadtad na tenga, mukha, at atay ng baboy na may calamansi at chili.</p>`,
+    recipe: `<div class="recipe-section-title">Mga Sangkap</div>
+    <ul class="ingredients-list">
+      <li>500g maskara ng baboy (mukha)</li>
+      <li>200g tenga ng baboy</li>
+      <li>3 sibuyas, tinadtad</li>
+      <li>5 siling haba, tinadtad</li>
+      <li>¼ cup toyo</li>
+      <li>4 calamansi, pigain</li>
+      <li>2 tbsp mantika</li>
+      <li>Itlog (optional)</li>
+    </ul>
+    <div class="recipe-section-title">Paraan ng Pagluluto</div>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><span>Lutuin ang baboy sa tubig na may asin hanggang malambot. Palamigin at tadtarin nang maliliit.</span></li>
+      <li><span class="step-num">02</span><span>Ihaw ang tinadtad na karne sa ihawan o broiler hanggang magsizzle at maging kayumanggi.</span></li>
+      <li><span class="step-num">03</span><span>Sa mainit na sizzling plate, maglagay ng mantika. Igisa ang sibuyas at sili.</span></li>
+      <li><span class="step-num">04</span><span>Ilagay ang karne. Timplahan ng toyo at calamansi juice. Haluin nang mabilis.</span></li>
+      <li><span class="step-num">05</span><span>Bilang opsyon, lagyan ng itlog sa tuktok at hayaang maluto sa init ng plate. Ihain nang sizzling!</span></li>
+    </ol>`,
+    info: `<p class="story-text"><strong style="color:var(--gold)">Pagkilala:</strong> Ang Sisig ay inilagay sa Oxford English Dictionary noong 2023 — isang pagkilala sa global na impluwensya ng lutuing Pilipino.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Ina ng Sisig:</strong> Si Lucia Cunanan ng Aling Lucing's restaurant sa Angeles City ang kinikilala bilang nagpopularisa ng modernong sisig.</p>
+    <p class="story-text"><strong style="color:var(--gold)">Iba't ibang Bersyon:</strong> Mula sa original na baboy sisig, mayroon na ngayong manok, tofu, pusit, at kahit tuna sisig para sa lahat ng kagustuhan.</p>`
+  }
+];
+
+// ═══════════════════════════════════════
+// GUMAMELA / CULTURE IMAGE
+// ═══════════════════════════════════════
+const cultureInner = document.getElementById('cultureInner');
+if (GUMAMELA_IMAGE && !GUMAMELA_IMAGE.includes('PALITAN')) {
+  cultureInner.innerHTML = `<img src="${GUMAMELA_IMAGE}" style="width:150px;height:150px;object-fit:cover;border-radius:50%;">`;
+}
+
+// ═══════════════════════════════════════
+// SUN RAYS
+// ═══════════════════════════════════════
+const raysContainer = document.getElementById('raysContainer');
+for (let i = 0; i < 12; i++) {
+  const ray = document.createElement('div');
+  ray.className = 'ray';
+  ray.style.transform = `rotate(${i * 30}deg)`;
+  raysContainer.appendChild(ray);
+}
+
+// ═══════════════════════════════════════
+// RENDER DISHES
+// ═══════════════════════════════════════
+const grid = document.getElementById('dishesGrid');
+dishes.forEach((dish, i) => {
+  const card = document.createElement('div');
+  card.className = 'dish-card';
+  card.innerHTML = `
+    <div class="dish-bg" style="background-image: url('${dish.image}'); opacity: 5;"></div>
+    <div class="dish-emoji"></div>
+    <div class="dish-overlay"></div>
+    <div class="dish-info">
+      <div class="dish-region">${dish.region}</div>
+      <div class="dish-name">${dish.name}</div>
+      <div class="dish-preview">${dish.preview}</div>
+      <div class="dish-tap-hint">Tingnan ang Buong Kwento</div>
+    </div>
+  `;
+  card.addEventListener('click', (e) => {
+    createRipple(e, card);
+    setTimeout(() => openModal(i), 120);
+  });
+  grid.appendChild(card);
+});
+
+// ═══════════════════════════════════════
+// RIPPLE
+// ═══════════════════════════════════════
+function createRipple(e, el) {
+  const rect = el.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const ripple = document.createElement('div');
+  ripple.className = 'ripple';
+  ripple.style.cssText = `
+    width: ${size}px; height: ${size}px;
+    left: ${e.clientX - rect.left - size/2}px;
+    top: ${e.clientY - rect.top - size/2}px;
+  `;
+  el.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 700);
+}
+
+// ═══════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════
+const overlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+
+function openModal(index) {
+  const d = dishes[index];
+  // Set background image in modal hero
+  const heroImg = document.getElementById('modalHeroImg');
+  heroImg.style.backgroundImage = `url('${d.image}')`;
+  // Keep emoji as fallback/overlay
+  document.getElementById('modalEmoji').textContent = d.image && !d.image.includes('PALITAN') ? '' : d.emoji;
+  document.getElementById('modalRegion').textContent = d.region;
+  document.getElementById('modalTitle').textContent = d.name;
+  document.getElementById('modalSubtitle').textContent = d.subtitle;
+  document.getElementById('tab-story').innerHTML = d.story;
+  document.getElementById('tab-recipe').innerHTML = d.recipe;
+  document.getElementById('tab-info').innerHTML = d.info;
+
+  // Reset tabs
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.modal-tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelector('.modal-tab[data-tab="story"]').classList.add('active');
+  document.getElementById('tab-story').classList.add('active');
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+modalClose.addEventListener('click', closeModal);
+overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// Tab switching
+document.querySelectorAll('.modal-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.modal-tab-content').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(`tab-${target}`).classList.add('active');
+  });
+});
+
+// ═══════════════════════════════════════
+// CUSTOM CURSOR
+// ═══════════════════════════════════════
+const cursor = document.getElementById('cursor');
+const cursorTrail = document.getElementById('cursorTrail');
+let mx = 0, my = 0, tx = 0, ty = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animateTrail() {
+  tx += (mx - tx) * 0.12;
+  ty += (my - ty) * 0.12;
+  cursorTrail.style.left = tx + 'px';
+  cursorTrail.style.top = ty + 'px';
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+
+document.querySelectorAll('a, button, .dish-card, .region-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '24px';
+    cursor.style.height = '24px';
+    cursorTrail.style.width = '60px';
+    cursorTrail.style.height = '60px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '16px';
+    cursor.style.height = '16px';
+    cursorTrail.style.width = '40px';
+    cursorTrail.style.height = '40px';
+  });
+});
+
+// ═══════════════════════════════════════
+// SCROLL ANIMATIONS
+// ═══════════════════════════════════════
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('section:not(#hero)').forEach(s => observer.observe(s));
+
+// Smooth hash scrolling
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ═══════════════════════════════════════
+// REGIONS DATA
+// ═══════════════════════════════════════
+const regions = [
+  {
+    flag: '🏔️',
+    image: REGION_IMAGES.ilocos,
+    name: 'Ilocos Region',
+    tag: 'Region I · Northern Luzon',
+    subtitle: 'Land of Adobo and Bold Flavors',
+    summary: 'Bagnet · Pinakbet · Empanada · Ilocos Longganisa',
+    desc: 'Known for bold and salty cuisine.',
+    story: `
+      <p class="rmodal-story">The Ilocos Region — comprising Ilocos Norte, Ilocos Sur, La Union, and Pangasinan — is one of the oldest settlements in the Philippines with a rich culinary history. The Ilocanos are known for their resourcefulness and creativity in cooking.</p>
+      <blockquote class="rmodal-quote">"The Ilocano wastes nothing — every part of an animal or plant is turned into nourishing food."</blockquote>
+      <p class="rmodal-story">The dry climate of Ilocos has influenced their cooking style — many dishes are fried or dried to preserve food longer. The taste of the sea from the Luzon Sea is always felt in every dish of this region.</p>
+    `,
+    dishes: [
+      { emoji: '🥩', image: 'https://i.imgur.com/c4OoN3o.jpeg', name: 'Bagnet', tag: 'Main Dish', desc: 'Pork belly fried repeatedly until the skin becomes extra crispy. Many say it\'s better than lechon.' },
+      { emoji: '🥘', image: 'https://i.imgur.com/Bgbdwdt.jpeg', name: 'Pinakbet', tag: 'Vegetables', desc: 'Mixed vegetables with fermented fish paste. A symbol of Ilocano creativity in cooking.' },
+      { emoji: '🥟', image: 'https://i.imgur.com/xkCI6Iy.jpeg', name: 'Ilocos Empanada', tag: 'Snack', desc: 'Crispy pastry filled with longganisa, egg, and bean sprouts. Red in color from achuete.' },
+      { emoji: '🌭', image: 'https://i.imgur.com/ERYP65F.jpeg', name: 'Ilocos Longganisa', tag: 'Breakfast', desc: 'Sour and salty sausage made from pork and vinegar. Best served with garlic fried rice and egg.' },
+      { emoji: '🍲', image: 'https://i.imgur.com/VrPvNSl.jpeg', name: 'Dinengdeng', tag: 'Soup', desc: 'Clear broth with various vegetables and fish. Similar to pinakbet but with more liquid.' },
+      { emoji: '🐟', image: 'https://i.imgur.com/U9TGfpY.jpeg', name: 'Pinapaitan', tag: 'Special', desc: 'Bitter broth from goat or cow bile. For the bold palate — a truly unique experience.' },
+      { emoji: '🍮', image: 'https://i.imgur.com/ndbhkHZ.jpeg', name: 'Tupig', tag: 'Kakanin', desc: 'Soft rice cake made from glutinous rice with coconut, wrapped in banana leaves and grilled.' },
+    ]
+  },
+  {
+    flag: '🌿',
+    image: REGION_IMAGES.bicol,
+    name: 'Bicol Region',
+    tag: 'Region V · Pacific Coast',
+    subtitle: 'Kingdom of Coconut Milk and Chili',
+    summary: 'Bicol Express · Laing · Kinunot · Pinangat',
+    desc: 'Spicy and fragrant cuisine with coconut milk.',
+    story: `
+      <p class="rmodal-story">Bicol, located at the tip of Luzon and surrounded by sea on three sides, has a unique cuisine known worldwide for its spiciness. Coconut milk and chili are the heart of every Bicolano dish.</p>
+      <blockquote class="rmodal-quote">"In Bicol, chili is not a seasoning — it is an ingredient. And coconut milk is not an addition — it is the soul of every dish."</blockquote>
+      <p class="rmodal-story">The abundant coconut trees in the region allowed for deep use of coconut milk in almost all dishes. Mount Mayon — the world's most perfect volcano — can be a symbol of Bicolano cuisine: beautiful on the outside, blazing on the inside.</p>
+    `,
+    dishes: [
+      { emoji: '🌶️', image: 'https://i.imgur.com/b6BV7pT.jpeg', name: 'Bicol Express', tag: 'Main Dish', desc: 'Pork cooked in coconut milk with plenty of chili. The most famous dish from Bicol, known throughout the Philippines.' },
+      { emoji: '🍃', image: 'https://i.imgur.com/SEjAukQ.jpeg', name: 'Laing', tag: 'Vegetables', desc: 'Taro leaves cooked in coconut milk, chili, and pork. Must not be stirred at first to avoid itchiness.' },
+      { emoji: '🐟', image: 'https://i.imgur.com/OXECWkX.jpeg', name: 'Kinunot', tag: 'Seafood', desc: 'Stingray or manta ray cooked in coconut milk and malunggay leaves. Unique to Bicol with an unmatched flavor.' },
+      { emoji: '🌿', image: 'https://i.imgur.com/EKb8rfm.jpeg', name: 'Pinangat', tag: 'Special', desc: 'Fish or shrimp wrapped in taro leaves and cooked in coconut milk. Must be carefully cooked so the wrap doesn\'t break.' },
+      { emoji: '🥩', image: 'https://i.imgur.com/pfxuZXk.jpeg', name: 'Sinantolan', tag: 'Vegetables', desc: 'Santol cooked in coconut milk and pork. The sourness of santol and sweetness of coconut milk create a unique flavor.' },
+      { emoji: '🦐', image: 'https://i.imgur.com/yC1aEIP.jpeg', name: 'Ginataang Hipon', tag: 'Seafood', desc: 'Shrimp cooked in rich coconut milk with chili and garlic. A simple yet incredibly delicious Bicolano dish.' },
+      { emoji: '🍰', image: 'https://i.imgur.com/j0gKltX.jpeg', name: 'Pili Tart', tag: 'Dessert', desc: 'Sweet pastry filled with pili nuts — a fruit found only in Bicol.' },
+    ]
+  },
+  {
+    flag: '🏙️',
+    image: REGION_IMAGES.manila,
+    name: 'Metro Manila',
+    tag: 'NCR · Heart of the Philippines',
+    subtitle: 'Center of All Flavors',
+    summary: 'Lechon · Kare-Kare · Crispy Pata · Bulalo',
+    desc: 'Melting pot of all regional cuisines.',
+    story: `
+      <p class="rmodal-story">Metro Manila, as the capital of the Philippines, is not only the center of politics and business — it is also the most vibrant culinary melting pot in the country. Here, all cuisines from every corner of the Philippines converge.</p>
+      <blockquote class="rmodal-quote">"In Manila, you can find everything — from grandmother's home cooking to the latest world-class fusion cuisine."</blockquote>
+      <p class="rmodal-story">The history of Manila — from Spanish, American, and Japanese eras — left a deep mark on its cuisine. Binondo, the world's oldest Chinatown, added Chinese flavors. The Spanish colonial period brought stewed dishes. Everything came together in one beautiful harmony.</p>
+    `,
+    dishes: [
+      { emoji: '🍖', image: 'https://i.imgur.com/xxi7aKY.jpeg', name: 'Crispy Pata', tag: 'Main Dish', desc: 'Deep-fried pork leg until crispy. A symbol of celebration in every Manila family.' },
+      { emoji: '🍲', image: 'https://i.imgur.com/K0vA77b.jpeg', name: 'Bulalo', tag: 'Soup', desc: 'Beef bone marrow soup. Best on a cold night — a powerful, rich broth.' },
+      { emoji: '🍜', image: 'https://i.imgur.com/qu279Zx.jpeg', name: 'Pancit Palabok', tag: 'Noodles', desc: 'Noodles with orange shrimp sauce, crushed chicharon, and tofu. Manila\'s signature noodle dish.' },
+      { emoji: '🥘', image: 'https://i.imgur.com/k31Gv2I.jpeg', name: 'Kare-Kare', tag: 'Special', desc: 'Rich peanut stew with vegetables. Always served with shrimp paste — best in Manila.' },
+      { emoji: '🍳', image: 'https://i.imgur.com/BWSZRyJ.jpeg', name: 'Tapsilog', tag: 'Breakfast', desc: 'Tapa, garlic fried rice, and egg — the breakfast triangle of every Filipino. Born on the streets of Manila.' },
+      { emoji: '🍡', image: 'https://i.imgur.com/IgRi64c.jpeg', name: 'Halo-Halo at Razon\'s', tag: 'Dessert', desc: 'Manila\'s most iconic halo-halo — simple ingredients but an unmatched flavor.' },
+      { emoji: '🥟', image: 'https://i.imgur.com/5c9TlEm.jpeg', name: 'Siopao & Siomai', tag: 'Snack', desc: 'From Binondo Chinatown — Chinese buns and dumplings that became a favorite Manila snack.' },
+    ]
+  },
+  {
+    flag: '🌊',
+    image: REGION_IMAGES.visayas,
+    name: 'Visayas',
+    tag: 'Central Philippines · Visayan Sea',
+    subtitle: 'Land of Lechon and Kinilaw',
+    summary: 'Lechon Cebu · Kinilaw · Pochero · Batchoy',
+    desc: 'Fresh and flavorful island cuisine.',
+    story: `
+      <p class="rmodal-story">The Visayas — comprising Cebu, Bohol, Negros, Leyte, Samar, and more — has a cuisine deeply influenced by the sea. Fresh fish, shrimp, crabs, and various seafood are the main ingredients of every dish.</p>
+      <blockquote class="rmodal-quote">"Lechon Cebu is not just pork — it is a masterpiece. Its skin is carefully roasted for many hours to achieve perfect crispiness."</blockquote>
+      <p class="rmodal-story">Anthony Bourdain himself said Lechon Cebu was the best pig he had ever tasted in his life. The secret? The lemongrass and herb stuffing, and the long process of roasting over charcoal.</p>
+    `,
+    dishes: [
+      { emoji: '🍖', image: 'https://i.imgur.com/kD63ye2.jpeg', name: 'Lechon Cebu', tag: 'National Treasure', desc: 'Called by the world the best lechon. Crispy skin, tender meat, and fragrant stuffing.' },
+      { emoji: '🐟', image: 'https://i.imgur.com/Se0LBwr.jpeg', name: 'Kinilaw', tag: 'Appetizer', desc: 'Fresh fish or shrimp "cooked" in vinegar and calamansi. The Cebuano ceviche — fresh and tangy.' },
+      { emoji: '🍜', image: 'https://i.imgur.com/kkga3O9.jpeg', name: 'La Paz Batchoy', tag: 'Soup', desc: 'Hot noodles with pork innards, liver, and chicharon. Originated in La Paz, Iloilo in the 1930s.' },
+      { emoji: '🥘', image: 'https://i.imgur.com/HgWe4KS.jpeg', name: 'Pochero', tag: 'Stew', desc: 'Rich stew of beef or pork with saba banana and vegetables. A special dish of Cebu.' },
+      { emoji: '🦑', image: 'https://i.imgur.com/1s2tdSQ.jpeg', name: 'Sutukil', tag: 'Seafood', desc: 'Not one dish but three cooking methods — Sugba (grilled), Tuwa (stewed), Kilaw (ceviche-style).' },
+      { emoji: '🍰', image: 'https://i.imgur.com/12zl3sV.jpeg', name: 'Torta sa Argao', tag: 'Dessert', desc: 'Sweet bibingka special to Argao, Cebu. Made with eggs, sugar, and lard — an ancient recipe.' },
+      { emoji: '🌊', image: 'https://i.imgur.com/cbJVIhA.jpeg', name: 'Tinolang Isda', tag: 'Soup', desc: 'Clear fish broth with ginger and vegetables. Simple cooking but full of sea flavor.' },
+    ]
+  },
+  {
+    flag: '🌴',
+    image: REGION_IMAGES.mindanao,
+    name: 'Mindanao',
+    tag: 'Region XII · Southern Philippines',
+    subtitle: 'Fragrant Land of Banana and Coconut',
+    summary: 'Beef Piyanggang · Sinuglaw · Tiyula Itum · Pastil',
+    desc: 'Rich and unique cuisine of the south.',
+    story: `
+      <p class="rmodal-story">Mindanao — the largest island of southern Philippines — is home to various tribes and cultures: Maranao, Maguindanao, Tausug, B\'laan, T\'boli, and many more. Each culture has its own unique cuisine that creates a rich tapestry of flavors in the region.</p>
+      <blockquote class="rmodal-quote">"The cuisine of Mindanao is like its natural resources — abundant, fragrant, and full of flavors you won't find anywhere else in the world."</blockquote>
+      <p class="rmodal-story">The Islamic influence in Mindanao is visible in cooking — spices like turmeric, lemongrass, and coconut milk are primary ingredients. The Halal method of preparation gives a unique flavor to every dish.</p>
+    `,
+    dishes: [
+      { emoji: '🥩', image: 'https://i.imgur.com/f1tu6vr.jpeg', name: 'Beef Piyanggang', tag: 'Main Dish', desc: 'Grilled beef with special marinade of coconut, turmeric, and lemongrass. A Tausug dish from Sulu.' },
+      { emoji: '🐟', image: 'https://i.imgur.com/CgW82Ha.jpeg', name: 'Sinuglaw', tag: 'Fusion', desc: 'Combination of sinugba (grilled pork) and kinilaw (raw fish in vinegar). A strong contrast of flavors.' },
+      { emoji: '🍲', image: 'https://i.imgur.com/UwaaZ9U.jpeg', name: 'Tiyula Itum', tag: 'Soup', desc: 'Black beef soup with charred coconut and spices. The "black soup" special to the Tausug people.' },
+      { emoji: '🍱', image: 'https://i.imgur.com/9vTrKYX.jpeg', name: 'Pastil', tag: 'Breakfast', desc: 'Rice with sautéed meat or fish, wrapped in banana leaf. The quickest breakfast in Mindanao.' },
+      { emoji: '🍌', image: 'https://i.imgur.com/YFXIuYK.jpeg', name: 'Ginataang Langka', tag: 'Vegetables', desc: 'Jackfruit cooked in rich coconut milk and chili. A fragrant and delicious Maranao dish.' },
+      { emoji: '🦀', image: 'https://i.imgur.com/d0DRQkr.jpeg', name: 'Alimango sa Gata', tag: 'Seafood', desc: 'Fresh crab from the Mindanao sea cooked in coconut milk and chili. A favorite dish on the coast.' },
+      { emoji: '🍮', image: 'https://i.imgur.com/5sbtd5e.jpeg', name: 'Dodol', tag: 'Kakanin', desc: 'Thick and sweet rice cake made from glutinous rice, coconut milk, and sugar. Special for occasions.' },
+    ]
+  },
+  {
+    flag: '🌾',
+    image: REGION_IMAGES.pampanga,
+    name: 'Pampanga',
+    tag: 'Region III · Culinary Capital',
+    subtitle: 'Capital of Philippine Cuisine',
+    summary: 'Sisig · Tocino · Morcon · Kare-Kare · Dinuguan',
+    desc: 'Home of the country\'s best cooks.',
+    story: `
+      <p class="rmodal-story">Pampanga is not just a province — it is an institution in the world of cooking. Called the "Culinary Capital of the Philippines," and for good reason: the Kapampangans are known worldwide for their excellence and love of cooking.</p>
+      <blockquote class="rmodal-quote">"The Kapampangan does not eat to live — they live to eat. And in every bite, you feel the love they put into every dish."</blockquote>
+      <p class="rmodal-story">Pampanga is the birthplace of many national dishes — Sisig, Tocino, Morcon, and many more. The region's history as a cultural center during the Spanish period gave them unique cooking methods that blended local and foreign traditions.</p>
+    `,
+    dishes: [
+      { emoji: '🍢', image: 'https://i.imgur.com/dpURBYW.jpeg', name: 'Sisig', tag: 'National Pride', desc: 'Chopped pork on a sizzling plate with calamansi and chili. A national dish originating from Angeles City.' },
+      { emoji: '🌭', image: 'https://i.imgur.com/yS2JQ5d.jpeg', name: 'Tocino', tag: 'Breakfast', desc: 'Sweet cured pork. Kapampangan tocino is the best — every family has a secret recipe.' },
+      { emoji: '🥩', image: 'https://i.imgur.com/RR3mneO.jpeg', name: 'Morcon', tag: 'Special', desc: 'Beef roll stuffed with sausage, egg, and vegetables. A special celebration dish of Pampanga.' },
+      { emoji: '🍲', image: 'https://i.imgur.com/k31Gv2I.jpeg', name: 'Kare-Kare', tag: 'Main Dish', desc: 'The best Kare-Kare is made by Kapampangans. Rich peanut sauce, tender meat, and fresh vegetables.' },
+      { emoji: '🩸', image: 'https://i.imgur.com/3pXDfsZ.jpeg', name: 'Dinuguan', tag: 'Traditional', desc: 'Pork cooked in its own blood with vinegar and chili. Also called "chocolate meat" — a unique flavor.' },
+      { emoji: '🍱', image: 'https://i.imgur.com/0qiSYUn.jpeg', name: 'Caldereta', tag: 'Stew', desc: 'Goat or beef cooked in tomato sauce with liver spread, olives, and chili. Spanish influence.' },
+      { emoji: '🍮', image: 'https://i.imgur.com/9Adgypj.jpeg', name: 'Tibok-Tibok', tag: 'Dessert', desc: 'Soft rice pudding made from carabao milk and glutinous rice. A special dessert of Pampanga.' },
+    ]
+  }
+];
+
+// ═══════════════════════════════════════
+// RENDER REGIONS
+// ═══════════════════════════════════════
+const regionsGrid = document.getElementById('regionsGrid');
+regions.forEach((region, i) => {
+  const card = document.createElement('div');
+  card.className = 'region-card';
+  // Add background image if available
+  if (region.image && !region.image.includes('PALITAN')) {
+    card.style.backgroundImage = `url('${region.image}')`;
+    card.style.backgroundSize = 'cover';
+    card.style.backgroundPosition = 'center';
+  }
+  card.innerHTML = `
+    <div style="position:relative;z-index:2;">
+      <div class="region-flag">${region.flag}</div>
+      <div class="region-name">${region.name}</div>
+      <div class="region-foods">${region.summary}</div>
+      <div class="region-desc">${region.desc}</div>
+      <div class="region-click-hint">Explore this Region</div>
+    </div>
+    ${region.image && !region.image.includes('PALITAN') ? '<div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(28,16,8,0.85),rgba(61,43,31,0.7));z-index:1;border-radius:inherit;"></div>' : ''}
+  `;
+  card.addEventListener('click', (e) => {
+    createRipple(e, card);
+    setTimeout(() => openRegionModal(i), 120);
+  });
+  regionsGrid.appendChild(card);
+});
+
+// ═══════════════════════════════════════
+// REGION MODAL
+// ═══════════════════════════════════════
+const roverlay = document.getElementById('rmodalOverlay');
+const rmodalClose = document.getElementById('rmodalClose');
+
+function openRegionModal(index) {
+  const r = regions[index];
+  // Set banner background image if available
+  const banner = document.querySelector('.rmodal-banner');
+  if (r.image && !r.image.includes('PALITAN')) {
+    banner.style.backgroundImage = `url('${r.image}')`;
+    banner.style.backgroundSize = 'cover';
+    banner.style.backgroundPosition = 'center';
+  } else {
+    banner.style.backgroundImage = '';
+  }
+  document.getElementById('rmodalIcon').textContent = r.flag;
+  document.getElementById('rmodalTag').textContent = r.tag;
+  document.getElementById('rmodalTitle').textContent = r.name;
+  document.getElementById('rmodalSubtitle').textContent = r.subtitle;
+  document.getElementById('rmodalStory').innerHTML = r.story;
+
+  const dishGrid = document.getElementById('rmodalDishes');
+  dishGrid.innerHTML = r.dishes.map(d => `
+    <div class="rmodal-dish-item">
+      <div class="rmodal-dish-emoji">
+        ${d.image && !d.image.includes('PALITAN')
+          ? `<img src="${d.image}" style="width:56px;height:56px;object-fit:cover;border-radius:8px;display:block;">`
+          : d.emoji}
+      </div>
+      <div class="rmodal-dish-name">${d.name}</div>
+      <div class="rmodal-dish-desc">${d.desc}</div>
+      <span class="rmodal-dish-tag">${d.tag}</span>
+    </div>
+  `).join('');
+
+  roverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRegionModal() {
+  roverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+rmodalClose.addEventListener('click', closeRegionModal);
+roverlay.addEventListener('click', (e) => { if (e.target === roverlay) closeRegionModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeRegionModal(); } });
+</script>
+</body>
+</html>
